@@ -29,7 +29,7 @@
 
 
 
-function majorityElement(nums: number[]): number {
+function majorityElementFun(nums: number[]): number {
     let candidate1:number|null=null
     let count1:number=0
     //find possible candidates
