@@ -38,3 +38,25 @@ var nextGreaterElements = function (nums) {
 };
 
 nextGreaterElements(nums)
+
+
+
+var nextGreaterElement = function(nums1, nums2) {
+    let map=new Map()
+    let stack=[]
+    const result=[]
+     for(var i=nums2.length-1;i>=0;i--){
+        const num=nums2[i]
+     while(stack.length>0 && stack[stack.length-1]<=num){
+        stack.pop()
+      }
+      let nextGreaterElement=stack.length>0?stack[stack.length-1]:-1
+      map.set(num,nextGreaterElement)
+      stack.push(num)
+     }
+
+    for(const num of nums1){
+       result.push(map.get(num))
+    }
+    return result
+};
