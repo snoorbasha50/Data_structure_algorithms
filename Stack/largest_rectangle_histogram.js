@@ -23,29 +23,34 @@
 
 
 var largestRectangleArea = function(heights) {
-    var largestArea=0
-    var stack=[]
-    for(var i=0;i<heights.length;i++){
-        while(stack.length>0 && heights[stack[stack.length-1]]>heights[i]){
-             let poppedIndex=stack.pop()
-             let height=heights[poppedIndex]
-             let right=i
-             let left=stack.length>0?stack[stack.length-1]:-1
-             let width=right-left-1
-             let Area=height*width
-             largestArea=Math.max(Area,largestArea)
-        }
-        stack.push(i)
+   let monoIncStack=[]
+   let MaxArea=0
+   for(var i=0;i<heights.length;i++){
+    
+    while(monoIncStack.length>0 && heights[i]<heights[monoIncStack[monoIncStack.length-1]]){
+        let poppedIndex=monoIncStack.pop()
+        let leftSmallerIndex=monoIncStack.length > 0
+        ? monoIncStack[monoIncStack.length - 1]
+        : -1;
+        let width=i-leftSmallerIndex-1
+        let height=heights[poppedIndex]
+        let area=width*height
+        MaxArea=Math.max(MaxArea,area)
     }
-    while(stack.length>0){
-             let poppedIndex=stack.pop()
-             let height=heights[poppedIndex]
-             let right=heights.length
-             let left=stack.length>0?stack[stack.length-1]:-1
-             let width=right-left-1
-             let Area=height*width
-             largestArea=Math.max(Area,largestArea)
-    }
-    return largestArea
+    monoIncStack.push(i)
+   }
+
+   while(monoIncStack.length>0){
+        let poppedIndex=monoIncStack.pop()
+        let leftSmallerIndex=monoIncStack.length > 0
+        ? monoIncStack[monoIncStack.length - 1]
+        : -1;
+        let width=heights.length-leftSmallerIndex-1
+        let height=heights[poppedIndex]
+        let area=width*height
+        MaxArea=Math.max(MaxArea,area)
+   }
+
+   return MaxArea
     
 };
